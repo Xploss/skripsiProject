@@ -31,6 +31,9 @@ Route::get('training/cari', 'TrainingController@cari');
 Route::post('training/import_excel', 'TrainingController@import_excel');
 Route::resource('training', 'TrainingController');
 
+Route::post('dataset/import_excel', 'DatasetController@import_excel');
+Route::resource('dataset', 'DatasetController');
+
 Route::get('mahasiswa/export', 'MahasiswaController@export');
 Route::get('mahasiswa/cari', 'MahasiswaController@cari');
 Route::resource('mahasiswa', 'MahasiswaController');

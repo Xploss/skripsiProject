@@ -32,6 +32,11 @@ class TrainingController extends Controller
         $halaman = 'training';
         $training = Training::paginate(25);
 
+        $bar = Training::select('fakultas')
+                        ->selectRaw('SUM(CASE WHEN diterimaBulanStlhLulus="Cepat" THEN 1 ELSE 0 END) AS Cepat, SUM(CASE WHEN diterimaBulanStlhLulus="Lama" THEN 1 ELSE 0 END) AS Lama')
+                        ->groupBy('fakultas')
+                        ->get();
+
         if ($training->isEmpty()) {
             $cek = $training->isEmpty();
         }else{
@@ -39,7 +44,7 @@ class TrainingController extends Controller
         }
         
         $page = true;
-        return view('training.index', compact('halaman','training', 'cek','page'));
+        return view('training.index', compact('halaman','training', 'cek','page', 'bar'));
     }
 
     /**
@@ -62,6 +67,10 @@ class TrainingController extends Controller
     public function cari(Request $request)
     {
         $halaman = 'training';
+        $bar = Training::select('fakultas')
+                        ->selectRaw('SUM(CASE WHEN diterimaBulanStlhLulus="Cepat" THEN 1 ELSE 0 END) AS Cepat, SUM(CASE WHEN diterimaBulanStlhLulus="Lama" THEN 1 ELSE 0 END) AS Lama')
+                        ->groupBy('fakultas')
+                        ->get();
         $search = trim($request->input('search'));
         $masaTunggu = trim($request->input('masaTunggu'));
         $fakultas = trim($request->input('fakultas'));
@@ -81,7 +90,7 @@ class TrainingController extends Controller
             $paging = (! empty($search)) ? $training->appends(['search' => $search]) : '';
             $cek = false;
             $page = true;
-            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu', 'bar'));
         }
         if (! empty($masaTunggu) && ! empty($fakultas)) {
             $query = Training::where([
@@ -93,7 +102,7 @@ class TrainingController extends Controller
             $paging = (! empty($fakultas)) ? $training->appends(['fakultas' => $fakultas]) : '';
             $cek = false;
             $page = true;
-            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu', 'bar'));
         }
         if (! empty($masaTunggu)) {
             $query = Training::where('diterimaBulanStlhLulus', $masaTunggu);
@@ -101,7 +110,7 @@ class TrainingController extends Controller
             $paging = (! empty($masaTunggu)) ? $training->appends(['masaTunggu' => $masaTunggu]) : '';
             $cek = false;
             $page = true;
-            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu', 'bar'));
         }
         if (! empty($fakultas)) {
             $query = Training::where('fakultas', $fakultas);
@@ -109,7 +118,7 @@ class TrainingController extends Controller
             $paging = (! empty($fakultas)) ? $training->appends(['fakultas' => $fakultas]) : '';
             $cek = false;
             $page = true;
-            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu', 'bar'));
         }
         return redirect('training');
        }
@@ -124,15 +133,17 @@ class TrainingController extends Controller
 		// menangkap file excel
 		$file = $request->file('file');
  
+        
+
 		// membuat nama file unik
-		$nama_file = rand().$file->getClientOriginalName();
+		/*$nama_file = rand().$file->getClientOriginalName();
  
 		// upload ke folder file_siswa di dalam folder public
-		$file->move('file_training',$nama_file);
+		$file->move('file_training',$nama_file);*/
  
 		// import data
-		Excel::import(new TrainingImport, public_path('/file_training/'.$nama_file));
- 
+		//Excel::import(new TrainingImport, public_path('/file_training/'.$nama_file));
+        Excel::import(new TrainingImport, $file);
 		// notifikasi dengan session
 		Session::flash('flash_message','Data Training Berhasil Diimport');
  

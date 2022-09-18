@@ -103,8 +103,77 @@
 			
 			
 		</div>
-		
- 
+		<script>
+			window.onload = function () {
+			
+			var chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
+				title:{
+					text: "Grafik Prediksi Masa Tunggu"
+				},	
+				axisY: {
+					title: "Banyak Mahasiswa",
+					titleFontColor: "#4F81BC",
+					lineColor: "#4F81BC",
+					labelFontColor: "#4F81BC",
+					tickColor: "#4F81BC"
+				},
+				toolTip: {
+					shared: true
+				},
+				legend: {
+					cursor:"pointer",
+					itemclick: toggleDataSeries
+				},
+				data: [{
+					type: "bar",
+					name: "Cepat",
+					legendText: "Cepat",
+					color : "green",
+					showInLegend: true, 
+					dataPoints:[
+						@foreach($bar as $b)
+						{ label: "{{ $b->fakultas }}", y: {{ $b->Cepat }} },
+						@endforeach
+					]
+				},{
+					type: "bar",
+					name: "Lama",
+					legendText: "Lama",
+					color : "red",
+					showInLegend: true, 
+					dataPoints:[
+						@foreach($bar as $b)
+						{ label: "{{ $b->fakultas }}", y: {{ $b->Lama }} },
+						@endforeach
+					]
+				}]
+			});
+			chart.render();
+			
+			function toggleDataSeries(e) {
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				}
+				else {
+					e.dataSeries.visible = true;
+				}
+				chart.render();
+			}
+			
+			}
+			</script>
+			<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+		<table>
+			@foreach ($bar as $b)
+			<tr>
+				<td>{{ $b->fakultas }}</td>
+				<td>{{ $b->Cepat }}</td>
+				<td>{{ $b->Lama }}</td>
+			</tr>
+			@endforeach
+		</table>
+			
  
  
 	@endsection

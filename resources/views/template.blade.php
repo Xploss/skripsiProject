@@ -180,7 +180,7 @@
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="{{ asset('js/jquery_3_6_0.min.js') }}"></script>
     <script src="{{ asset('bootstrap_4_6_1/js/bootstrap.min.js') }}"></script>
-
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

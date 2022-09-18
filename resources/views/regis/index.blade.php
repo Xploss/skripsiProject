@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header">Pendaftaran Akun</div>
                 <div class="card-body"> 
-                    {!! Form::open(['url' => 'akun', 'files' => 'true']) !!}
+                    {!! Form::open(['url' => 'regis', 'files' => 'true']) !!}
                     
                     @if ($errors->any())
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : 'has-success'}}">
