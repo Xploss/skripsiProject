@@ -7,6 +7,7 @@ use App\Dataset;
 use App\NamaDataset;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DatasetImport;
+use Illuminate\Support\Facades\Http;
 use Session;
 
 class DatasetController extends Controller
@@ -18,11 +19,25 @@ class DatasetController extends Controller
      */
     public function index()
     {
-        $dataset = Dataset::select('id_dataset')
+        $dataset = Dataset::select('id_dataset',)
                         ->selectRaw('SUM(CASE WHEN diterimaBulanStlhLulus="Cepat" THEN 1 ELSE 0 END) AS cepat, SUM(CASE WHEN diterimaBulanStlhLulus="Lama" THEN 1 ELSE 0 END) AS lama')
                         ->groupBy('id_dataset')
+                        ->orderBy('id_dataset','DESC')
                         ->get();
-        return view('dataset.index', compact('dataset'));
+
+        $value = array();
+        $deviasi = array();
+        foreach($dataset as $data){
+            $client = Http::withBasicAuth('admin','94k0z4007')->get('http://DESKTOP-QO1L6PH:8080/api/rest/process/performaDataset?id_dataset='. $data->id_dataset)->json();
+            $value[] = round($client['Value']*100,2);
+            $deviasi[] = round($client['Standard Deviation']*100,2);
+        }
+
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://DESKTOP-QO1L6PH:8080/api/rest/process/performanceData?')->json();
+        $valueTraining = round($client['Value']*100,2);
+        $deviasiTraining = round($client['Standard Deviation']*100,2);
+
+        return view('dataset.index', compact('dataset', 'value', 'deviasi', 'valueTraining', 'deviasiTraining'));
     }
 
     /**
@@ -58,8 +73,8 @@ class DatasetController extends Controller
 
         
 		$file = $request->file('file');
- 
-        NamaDataset::Create(['namaData' => $request->namaData]);
+        NamaDataset::Create(['namaData' => $file->getClientOriginalName()]);
+        //NamaDataset::Create(['namaData' => $request->namaData]);
 
 		// membuat nama file unik
 		/*$nama_file = rand().$file->getClientOriginalName();
@@ -118,6 +133,8 @@ class DatasetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dataset = NamaDataset::findOrFail($id);
+        $dataset->delete();
+        return redirect('dataset');
     }
 }

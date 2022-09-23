@@ -14,7 +14,6 @@
 
                         <label>Pilih file excel</label>
                         <div class="form-group">
-                            <input type="text" name="namaData" required="required" placeholder="Nama Dataset">
                             <input type="file" name="file" required="required">
                         </div>
 
@@ -38,16 +37,27 @@
             <th>Nama Dataset</th>
             <th>Total Cepat</th>
             <th>Total Lama</th>
+            <th>Akurasi</th>
+            <th>Standar Deviasi</th>
             <th>Aksi</th>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($dataset as $data)
-                    <td>{{ $data->namadataset->namaData }}</td>
-                    <td>{{ $data->cepat }}</td>
-                    <td>{{ $data->lama }}</td>
+                @foreach ($dataset as $data => $baris)
+                <tr>
+                    <td>{{ $baris->namadataset->namaData }}</td>
+                    <td>{{ $baris->cepat }}</td>
+                    <td>{{ $baris->lama }}</td>
+                    <td>{{ $value[$data] }}%</td>
+                    <td>{{ $deviasi[$data] }}%</td>
+                    <td>
+                        <div style="display: inline-block">
+                            {!! Form::open(['method' => 'DELETE','action' => ['DatasetController@destroy', $baris->id_dataset]]) !!}
+                            {!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::close() !!}
+                        </div>
+                    </td>
+                </tr>
                 @endforeach
-            </tr>
         </tbody>
     </table>
 @endsection
