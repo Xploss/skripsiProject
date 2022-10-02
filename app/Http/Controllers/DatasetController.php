@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dataset;
 use App\NamaDataset;
+use App\Training;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DatasetImport;
 use Illuminate\Support\Facades\Http;
@@ -25,6 +26,9 @@ class DatasetController extends Controller
                         ->orderBy('id_dataset','DESC')
                         ->get();
 
+        $training = Training::selectRaw('SUM(CASE WHEN diterimaBulanStlhLulus="Cepat" THEN 1 ELSE 0 END) AS cepat, SUM(CASE WHEN diterimaBulanStlhLulus="Lama" THEN 1 ELSE 0 END) AS lama')
+                        ->get();
+                        
         $value = array();
         $deviasi = array();
         foreach($dataset as $data){
@@ -37,7 +41,7 @@ class DatasetController extends Controller
         $valueTraining = round($client['Value']*100,2);
         $deviasiTraining = round($client['Standard Deviation']*100,2);
 
-        return view('dataset.index', compact('dataset', 'value', 'deviasi', 'valueTraining', 'deviasiTraining'));
+        return view('dataset.index', compact('dataset', 'value', 'deviasi', 'training', 'valueTraining', 'deviasiTraining'));
     }
 
     /**
@@ -65,7 +69,6 @@ class DatasetController extends Controller
     {
         // validasi
 		$this->validate($request, [
-            'namaData' => 'required',
 			'file' => 'required|mimes:csv,xls,xlsx'
 		]);
         //echo "hai";
@@ -89,7 +92,7 @@ class DatasetController extends Controller
 		Session::flash('flash_message','Data Training Berhasil Diimport');
  
 		// alihkan halaman kembali
-		return redirect('training');
+		return redirect('dataset');
     }
     /**
      * Display the specified resource.

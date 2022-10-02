@@ -5,7 +5,6 @@
             {!! Form::select('prediksi', [
                 null => 'Pilih prediksi',
                 'cepat' => 'Cepat',
-                'sedang' => 'Sedang',
                 'lama' => 'Lama'], (! empty($masaTunggu)) ? $masaTunggu : 'Pilih masa tunggu', ['class' => 'form-control']) !!}
         </div>
         <div class="col-md-2">

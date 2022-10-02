@@ -46,6 +46,9 @@
 			
 
 			<h2>Data Training</h2>
+			<button type="button" class="btn btn-info mr-5" aria-pressed="true" href="dataset">
+				Akurasi Data
+			</button>
 			<button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
 				Unggah Data
 			</button>

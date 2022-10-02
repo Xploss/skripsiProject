@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <h2>Dataset</h2>
+    <h2>Uji Performa Dataset</h2>
 			<button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
 				Unggah Data
 			</button>
@@ -42,6 +42,13 @@
             <th>Aksi</th>
         </thead>
         <tbody>
+            <tr>
+                <td>Data training yang digunakan</td>
+                <td>{{ $training[0]['cepat'] }}</td>
+                <td>{{ $training[0]['lama'] }}</td>
+                <td>{{ $valueTraining }}%</td>
+                <td>{{ $deviasiTraining }}%</td>
+            </tr>
                 @foreach ($dataset as $data => $baris)
                 <tr>
                     <td>{{ $baris->namadataset->namaData }}</td>

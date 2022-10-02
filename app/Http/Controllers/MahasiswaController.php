@@ -31,6 +31,11 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::paginate(25);
 
         $halaman = 'mahasiswa';
+
+        $bar = Mahasiswa::select('fakultas')
+                        ->selectRaw('SUM(CASE WHEN prediksi="Cepat" THEN 1 ELSE 0 END) AS Cepat, SUM(CASE WHEN prediksi="Lama" THEN 1 ELSE 0 END) AS Lama')
+                        ->groupBy('fakultas')
+                        ->get();
         //return view('mahasiswa.index', compact('mahasiswa','halaman'));
 
         /*$prediksi = array();
@@ -43,7 +48,7 @@ class MahasiswaController extends Controller
         
         //$prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
         //echo $prediksi;
-        return view('mahasiswa.index', compact(['mahasiswa','halaman']));
+        return view('mahasiswa.index', compact(['mahasiswa','halaman','bar']));
     }
 
     public function export() 
@@ -57,6 +62,12 @@ class MahasiswaController extends Controller
         $prediksi = trim($request->input('prediksi'));
         $fakultas = trim($request->input('fakultas'));
         $namaAtauNim = trim($request->input('namaAtauNim'));
+
+        $bar = Mahasiswa::select('fakultas')
+                        ->selectRaw('SUM(CASE WHEN prediksi="Cepat" THEN 1 ELSE 0 END) AS Cepat, SUM(CASE WHEN prediksi="Lama" THEN 1 ELSE 0 END) AS Lama')
+                        ->groupBy('fakultas')
+                        ->get();
+
         if (! empty($search)) {
             $this->validate($request, [
                 'namaAtauNim' => 'required'
@@ -72,7 +83,7 @@ class MahasiswaController extends Controller
             $paging = (! empty($search)) ? $mahasiswa->appends(['search' => $search]) : '';
             $cek = false;
             $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi','bar'));
         }
         if (! empty($prediksi) && ! empty($fakultas)) {
             $query = Mahasiswa::where([
@@ -84,7 +95,7 @@ class MahasiswaController extends Controller
             $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
             $cek = false;
             $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi','bar'));
         }
         if (! empty($prediksi)) {
             $query = Mahasiswa::where('prediksi', $prediksi);
@@ -92,7 +103,7 @@ class MahasiswaController extends Controller
             $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
             $cek = false;
             $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi','bar'));
         }
         if (! empty($fakultas)) {
             $query = Mahasiswa::where('fakultas', $fakultas);
@@ -100,7 +111,7 @@ class MahasiswaController extends Controller
             $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
             $cek = false;
             $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi','bar'));
         }
         return redirect('mahasiswa');
        }
