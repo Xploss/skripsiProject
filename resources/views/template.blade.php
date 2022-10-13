@@ -111,43 +111,33 @@
                   @endif
                 @endif
                 
-                @if (Auth::check() && Auth::user()->level == 'admin')
-					@if (!empty($halaman) && $halaman == 'mahasiswa')
-					<li class="nav-item active">
-					<a class="nav-link" href="{{ url('mahasiswa') }}"><b>Data Mahasiswa</b><span class="sr-only">(current)</span></a>
-					</li> 
-						
-					@else
-					<li class="nav-item">
-					<a class="nav-link" href="{{ url('mahasiswa') }}">Data Mahasiswa</a>
-					</li>
-					@endif		
-				@endif
-                
-				@if (Auth::check() && Auth::user()->level == 'admin')
-					@if (!empty($halaman) && $halaman == 'akun')
-					<li class="nav-item active">
-					<a class="nav-link" href="{{ url('akun') }}"><b>Akun Mahasiswa</b><span class="sr-only">(current)</span></a>
-					</li> 
-						
-					@else
-					<li class="nav-item">
-					<a class="nav-link" href="{{ url('akun') }}">Akun Mahasiswa</a>
-					</li>
-					@endif	
-				@endif
-                
-
-                @if (!empty($halaman) && $halaman == 'about')
+                        @if (Auth::check() && Auth::user()->level == 'admin')
+                  @if (!empty($halaman) && $halaman == 'mahasiswa')
                   <li class="nav-item active">
-                  <a class="nav-link" href="{{ url('/about') }}"><b>Tentang</b><span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="{{ url('mahasiswa') }}"><b>Data Mahasiswa</b><span class="sr-only">(current)</span></a>
                   </li> 
                     
-                @else
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('/about') }}">Tentang</a>
+                  @else
+                  <li class="nav-item">
+                  <a class="nav-link" href="{{ url('mahasiswa') }}">Data Mahasiswa</a>
                   </li>
+                  @endif		
                 @endif
+                        
+                @if (Auth::check() && Auth::user()->level == 'admin')
+                  @if (!empty($halaman) && $halaman == 'akun')
+                  <li class="nav-item active">
+                  <a class="nav-link" href="{{ url('akun') }}"><b>Akun Mahasiswa</b><span class="sr-only">(current)</span></a>
+                  </li> 
+                    
+                  @else
+                  <li class="nav-item">
+                  <a class="nav-link" href="{{ url('akun') }}">Akun Mahasiswa</a>
+                  </li>
+                  @endif	
+                @endif
+                
+
               
             </ul>
             <ul class="nav justify-content-end">

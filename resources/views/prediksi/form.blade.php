@@ -116,9 +116,9 @@
             {!! Form::select('jenisPekerjaan',[
                 null => 'Silahkan pilih',
                 'Instansi Pemerintah' => 'Instansi Pemerintah',
-                'Organisasi non-profit/Lembaga Swadaya Masyarakat' => 'Organisasi non-profit/Lembaga Swadaya Masyarakat',
-                'Perusahaan swasta' => 'Perusahaan swasta',
-                'Wiraswasta/perusahaan sendiri' => 'Wiraswasta/perusahaan sendiri',
+                'Lembaga Swadaya Masyarakat' => 'Lembaga Swadaya Masyarakat',
+                'Perusahaan Swasta' => 'Perusahaan Swasta',
+                'Wiraswasta' => 'Wiraswasta',
                 'Lainnya' => 'Lainnya',
         ], null, ['class' => 'form-control']) !!}
             @if ($errors->has('jenisPekerjaan'))

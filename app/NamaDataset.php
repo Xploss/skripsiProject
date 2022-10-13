@@ -8,7 +8,7 @@ class NamaDataset extends Model
 {
     protected $table = "namadataset";
 
-    protected $fillable = ["namaData"];
+    protected $fillable = ["namaData", "akurasi", "deviasi"];
     /**
      * Get all of the dataset f NamaDataset
      *

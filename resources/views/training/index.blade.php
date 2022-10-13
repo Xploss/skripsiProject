@@ -46,15 +46,16 @@
 			
 
 			<h2>Data Training</h2>
-			<button type="button" class="btn btn-info mr-5" aria-pressed="true" href="dataset">
+			<a role="button" class="btn btn-info mr-5" aria-pressed="true" href="dataset">
 				Akurasi Data
-			</button>
+			</a>
 			<button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
 				Unggah Data
 			</button>
 			<a role="button" class="btn btn-danger mr-5" aria-pressed="true" href="training/delete">
 				Hapus Data
 			</a>
+			<p>Sebelum mengunggah data sebaiknya baca pedoman <a href="training/pedoman">disini</a></p>
 			<br>
 			<br>
 			<br>
@@ -81,7 +82,7 @@
 				<tbody>
 					@foreach ($training as $tr)
 						<tr>
-							<td>{{ $tr->diterimaBulanStlhLulus }} bulan</td>
+							<td>{{ $tr->diterimaBulanStlhLulus }}</td>
 							<td>{{ $tr->nim }}</td>
 							<td>{{ $tr->nama }}</td>
 							<td>{{ $tr->jenisKelamin }}</td>

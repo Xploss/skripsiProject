@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Training;
+use App\Mahasiswa;
 use Session;
 use DB;
 use Illuminate\Support\Facades\Storage; 
@@ -11,6 +12,9 @@ use App\Imports\TrainingImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Filesystem\Filesystem;
 use Validator;
+use File;
+use Response;
+use Illuminate\Support\Facades\Http;
 
 
 class TrainingController extends Controller
@@ -45,6 +49,11 @@ class TrainingController extends Controller
         
         $page = true;
         return view('training.index', compact('halaman','training', 'cek','page', 'bar'));
+    }
+
+    public function pedoman()
+    {
+        return Response::download(public_path('pedoman/Pedoman Unggah Data.pdf'));
     }
 
     /**
@@ -145,6 +154,14 @@ class TrainingController extends Controller
 		//Excel::import(new TrainingImport, public_path('/file_training/'.$nama_file));
         Excel::import(new TrainingImport, $file);
 		// notifikasi dengan session
+        $mahasiswa = Mahasiswa::all();
+        foreach($mahasiswa as $data){
+            $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $data->nim)->json();
+            $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+            $mhs = Mahasiswa::firstWhere('nim', $data->nim);
+            $mhs->prediksi = $prediksi;
+            $mhs->save();
+        }
 		Session::flash('flash_message','Data Training Berhasil Diimport');
  
 		// alihkan halaman kembali

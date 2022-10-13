@@ -69,7 +69,7 @@ class PrediksiController extends Controller
         }
 
         $validator = Validator::make($request->all(),[
-            'ipk'   =>  'required|numeric|between:1,4.00',
+            'ipk'   =>  'required|numeric|between:2,4.00',
             'kemampuanBahasaInggris'    =>  'required',
             'pengetahuanDiluarBidang'   =>  'required',
             'keterampilanKomputer'      =>  'required',

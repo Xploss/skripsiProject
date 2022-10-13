@@ -91,7 +91,7 @@
 								</div>
 								<div style="display: inline-block">
 									{!! Form::open(['method' => 'DELETE', 'action' => ['MahasiswaController@destroy', $id->nim]]) !!}
-									{!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm']) !!}
+									<!--{!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm']) !!}-->
 									{!! Form::close() !!}
 								</div>
 							</td>
@@ -100,6 +100,9 @@
 					
 				</tbody>
 			</table>
+			<div>
+				{{ $mahasiswa->links() }}
+			</div>
 		</div>
 		
  

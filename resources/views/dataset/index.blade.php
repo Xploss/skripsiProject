@@ -38,7 +38,6 @@
             <th>Total Cepat</th>
             <th>Total Lama</th>
             <th>Akurasi</th>
-            <th>Standar Deviasi</th>
             <th>Aksi</th>
         </thead>
         <tbody>
@@ -54,8 +53,8 @@
                     <td>{{ $baris->namadataset->namaData }}</td>
                     <td>{{ $baris->cepat }}</td>
                     <td>{{ $baris->lama }}</td>
-                    <td>{{ $value[$data] }}%</td>
-                    <td>{{ $deviasi[$data] }}%</td>
+                    <td>{{ $baris->namadataset->akurasi }}%</td>
+                    <td>{{ $baris->namadataset->deviasi }}%</td>
                     <td>
                         <div style="display: inline-block">
                             {!! Form::open(['method' => 'DELETE','action' => ['DatasetController@destroy', $baris->id_dataset]]) !!}

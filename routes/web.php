@@ -26,6 +26,7 @@ Route::get('/about', function () {
 
 Auth::routes(['register' => 'false']);
 
+Route::get('training/pedoman', 'TrainingController@pedoman');
 Route::get('training/delete', 'TrainingController@delete');
 Route::get('training/cari', 'TrainingController@cari');
 Route::post('training/import_excel', 'TrainingController@import_excel');

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-md-6">
         <h2>Data Mahasiswa</h2>
-        <p><i>Ini hanyalah prediksi belaka bukan benar benar akan terjadi nanti. Dari hasil ini diharapkan teman-teman bisa mempersiapkan diri untuk mendapatkan pekerjaan nantinya.</i></p>
+        <!--<p><i>Ini hanyalah prediksi belaka bukan benar benar akan terjadi nanti. Dari hasil ini diharapkan teman-teman bisa mempersiapkan diri untuk mendapatkan pekerjaan nantinya.</i></p>-->
             <table class="table">
                 <tr>
                     <td>NIM</td>

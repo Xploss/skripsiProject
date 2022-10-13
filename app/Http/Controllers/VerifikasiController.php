@@ -28,8 +28,8 @@ class VerifikasiController extends Controller
 
     public function index()
     {
-        $akun = User::paginate(25)->where('verifikasi', '0');
-        $akun = $akun->except(2);
+        $akun = User::where('verifikasi', '0')->get();
+        //$akun = $akun->except(1);
         $halaman = 'akun';
 
         return view('verifikasi.index', compact('halaman','akun'));

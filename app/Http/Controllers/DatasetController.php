@@ -29,19 +29,19 @@ class DatasetController extends Controller
         $training = Training::selectRaw('SUM(CASE WHEN diterimaBulanStlhLulus="Cepat" THEN 1 ELSE 0 END) AS cepat, SUM(CASE WHEN diterimaBulanStlhLulus="Lama" THEN 1 ELSE 0 END) AS lama')
                         ->get();
                         
-        $value = array();
+        /*$value = array();
         $deviasi = array();
         foreach($dataset as $data){
             $client = Http::withBasicAuth('admin','94k0z4007')->get('http://DESKTOP-QO1L6PH:8080/api/rest/process/performaDataset?id_dataset='. $data->id_dataset)->json();
             $value[] = round($client['Value']*100,2);
             $deviasi[] = round($client['Standard Deviation']*100,2);
-        }
+        }*/
 
         $client = Http::withBasicAuth('admin','94k0z4007')->get('http://DESKTOP-QO1L6PH:8080/api/rest/process/performanceData?')->json();
         $valueTraining = round($client['Value']*100,2);
         $deviasiTraining = round($client['Standard Deviation']*100,2);
 
-        return view('dataset.index', compact('dataset', 'value', 'deviasi', 'training', 'valueTraining', 'deviasiTraining'));
+        return view('dataset.index', compact('dataset', 'training', 'valueTraining', 'deviasiTraining'));
     }
 
     /**
@@ -89,6 +89,11 @@ class DatasetController extends Controller
 		//Excel::import(new TrainingImport, public_path('/file_training/'.$nama_file));
         Excel::import(new DatasetImport, $file);
 		// notifikasi dengan session
+        $namaDataset = NamaDataset::latest()->first();
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://DESKTOP-QO1L6PH:8080/api/rest/process/performaDataset?id_dataset='. $namaDataset->id)->json();
+        $namaDataset->akurasi = round($client['Value']*100,2);
+        $namaDataset->deviasi = round($client['Standard Deviation']*100,2);
+        $namaDataset->save();
 		Session::flash('flash_message','Data Training Berhasil Diimport');
  
 		// alihkan halaman kembali

@@ -33,7 +33,7 @@ class AkunController extends Controller
     public function index()
     {
         $akun = User::paginate(25)->where('verifikasi', '1');
-        $akun = $akun->except(2);
+        $akun = $akun->except(1);
         $halaman = 'akun';
 
         return view('akun.index', compact('halaman','akun'));

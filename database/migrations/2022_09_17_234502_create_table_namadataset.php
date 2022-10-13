@@ -16,6 +16,8 @@ class CreateTableNamadataset extends Migration
         Schema::create('namadataset', function (Blueprint $table) {
             $table->id();
             $table->string('namaData');
+            $table->float('akurasi', 4,2)->nullable();
+            $table->float('deviasi', 4,2)->nullable();
             $table->timestamps();
         });
 
