@@ -38,6 +38,7 @@
             <th>Total Cepat</th>
             <th>Total Lama</th>
             <th>Akurasi</th>
+            <th>Std Deviasi</th>
             <th>Aksi</th>
         </thead>
         <tbody>
