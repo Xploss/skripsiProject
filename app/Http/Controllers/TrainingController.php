@@ -160,7 +160,7 @@ class TrainingController extends Controller
             $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
             $mhs = Mahasiswa::firstWhere('nim', $data->nim);
             $mhs->prediksi = $prediksi;
-            $mhs->save();
+            $mhs->update();
         }
 		Session::flash('flash_message','Data Training Berhasil Diimport');
  
