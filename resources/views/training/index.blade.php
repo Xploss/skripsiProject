@@ -107,7 +107,7 @@
 			
 			
 		</div>
-		<script>
+		<!-- <script>
 			window.onload = function () {
 			
 			var chart = new CanvasJS.Chart("chartContainer", {
@@ -167,16 +167,7 @@
 			
 			}
 			</script>
-			<div id="chartContainer" style="height: 300px; width: 100%;"></div>
-		<table>
-			@foreach ($bar as $b)
-			<tr>
-				<td>{{ $b->fakultas }}</td>
-				<td>{{ $b->Cepat }}</td>
-				<td>{{ $b->Lama }}</td>
-			</tr>
-			@endforeach
-		</table>
+			<div id="chartContainer" style="height: 300px; width: 100%;"></div> -->
 			
  
  
